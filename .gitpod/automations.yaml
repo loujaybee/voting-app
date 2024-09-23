@@ -1,7 +1,45 @@
+services:
+
+    database:
+        name: Database - Postgres
+        description: Start backend database
+        triggeredBy:
+            - postEnvironmentStart
+            - manual
+        commands:
+            start: python3 -m http.server 
+
+    server:
+        name: Server - Python
+        description: Start backend server
+        triggeredBy:
+            - postEnvironmentStart
+            - manual
+        commands:
+            start: python3 -m http.server 
+
+    redis:
+        name: Cache - Redis
+        description: Start worker cache
+        triggeredBy:
+            - postEnvironmentStart
+            - manual
+        commands:
+            start: python3 -m http.server 
+
 tasks:
-    hello:
-        name: Hello World
+    unit-test:
+        name: Unit test
+        description: Execute unit tests
         command: |
             echo "Hello, World!"
         triggeredBy:
-        - manual
+            - manual
+    
+    aws:
+        name: Authenticate AWS
+        description: Get AWS credentials
+        command: |
+            echo "Hello, World!"
+        triggeredBy:
+            - manual
