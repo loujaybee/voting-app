@@ -7,7 +7,7 @@ services:
             - postEnvironmentStart
             - manual
         commands:
-            start: python3 -m http.server 
+            start: python3 -m http.server 3000
 
     server:
         name: Server - Python
@@ -16,7 +16,7 @@ services:
             - postEnvironmentStart
             - manual
         commands:
-            start: python3 -m http.server 
+            start: python3 -m http.server 3001
 
     redis:
         name: Cache - Redis
@@ -25,21 +25,41 @@ services:
             - postEnvironmentStart
             - manual
         commands:
-            start: python3 -m http.server 
+            start: python3 -m http.server 3002
 
 tasks:
     unit-test:
         name: Unit test
-        description: Execute unit tests
+        description: Run all unit tests
         command: |
             echo "Hello, World!"
+            sleep 5s
         triggeredBy:
             - manual
     
     aws:
-        name: Authenticate AWS
-        description: Get AWS credentials
+        name: Authenticate AWS - staging
+        description: Fetch temporary AWS credential
         command: |
             echo "Hello, World!"
+            sleep 3s
+        triggeredBy:
+            - manual
+
+    db:
+        name: Provision database
+        description: Provision new seeded Postgres DB
+        command: |
+            echo "Hello, World!"
+            sleep 10s
+        triggeredBy:
+            - manual
+
+    storybook:
+        name: Storybook
+        description: Start live design system
+        command: |
+            echo "Hello, World!"
+            sleep 5s
         triggeredBy:
             - manual
