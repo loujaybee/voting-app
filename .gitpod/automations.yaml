@@ -2,6 +2,7 @@ tasks:
     seed:
         name: Seed
         command: |
+            rm ~/.docker/config.json || true
             docker-compose --profile seed up -d
         triggeredBy:
         - manual
