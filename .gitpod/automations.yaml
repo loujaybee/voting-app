@@ -5,7 +5,6 @@ tasks:
             docker-compose --profile seed up -d
         triggeredBy:
         - manual
-        - postDevcontainerStart
 
 services:
     start-app:
