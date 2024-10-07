@@ -1,11 +1,21 @@
 tasks:
+
     seed:
         name: Seed
+        description: Kicks off a seeding job
         command: |
             rm ~/.docker/config.json || true
             docker-compose --profile seed up -d
         triggeredBy:
         - manual
+
+    dynamic-automations:
+        name: Pull dynamic automations
+        description: Pulls two externally defined automations
+        command: |
+            curl https://gist.githubusercontent.com/loujaybee/236263563fc0efb18df2ecfd637da53e/raw/56d556edd01661cb6353209fea20dc3463b2d8dd/dynamic-automations.yaml | gitpod automations update -
+        triggeredBy:
+            - manual
 
 services:
     start-app:
