@@ -13,7 +13,7 @@ services:
         description: Start Docker Compose
         commands:
             start: |
-                rm ~/.docker/config.json
+                rm ~/.docker/config.json || true
                 docker-compose up
         triggeredBy:
             - postEnvironmentStart
