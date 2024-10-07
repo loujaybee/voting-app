@@ -1,65 +1,19 @@
-services:
-
-    database:
-        name: Database - Postgres
-        description: Start backend database
-        triggeredBy:
-            - postEnvironmentStart
-            - manual
-        commands:
-            start: python3 -m http.server 3000
-
-    server:
-        name: Server - Python
-        description: Start backend server
-        triggeredBy:
-            - postEnvironmentStart
-            - manual
-        commands:
-            start: python3 -m http.server 3001
-
-    redis:
-        name: Cache - Redis
-        description: Start worker cache
-        triggeredBy:
-            - postEnvironmentStart
-            - manual
-        commands:
-            start: python3 -m http.server 3002
-
 tasks:
-    unit-test:
-        name: Unit test
-        description: Run all unit tests
+    seed:
+        name: Seed
         command: |
-            echo "Hello, World!"
-            sleep 5s
+            docker-compose --profile seed up -d
         triggeredBy:
-            - manual
-    
-    aws:
-        name: Authenticate AWS - staging
-        description: Fetch temporary AWS credential
-        command: |
-            echo "Hello, World!"
-            sleep 3s
-        triggeredBy:
-            - manual
+        - manual
+        - postDevcontainerStart
 
-    db:
-        name: Provision database
-        description: Provision new seeded Postgres DB
-        command: |
-            echo "Hello, World!"
-            sleep 10s
+services:
+    start-app:
+        name: Start App
+        description: Start Docker Compose
+        commands:
+            start: |
+                rm ~/.docker/config.json
+                docker-compose up
         triggeredBy:
-            - manual
-
-    storybook:
-        name: Storybook
-        description: Start live design system
-        command: |
-            echo "Hello, World!"
-            sleep 5s
-        triggeredBy:
-            - manual
+            - postEnvironmentStart
